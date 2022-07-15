@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/wrzg8/.gradle/caches/transforms-3/f71c95ae4b539f33075f23742eb9a376/transformed/jiaozivideoplayer-7.7.0/res/layout/jz_layout_std.xml" value="0.1265625" />
+        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.2505" />
+        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2505" />
+        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/activity_home.xml" value="0.275" />
+        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/activity_main.xml" value="0.1802536231884058" />
+        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/fragment_home.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/fragment_home_child.xml" value="0.275" />
+        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/fragment_message.xml" value="0.275" />
+        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/fragment_personal.xml" value="0.27395833333333336" />
+        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/fragment_slide_video.xml" value="0.27395833333333336" />
+        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/item_duanzi.xml" value="0.268" />
+        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/item_slide_video.xml" value="0.268" />
+        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/menu/menu_main.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

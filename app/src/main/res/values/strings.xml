@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Duanzile</string>
+    <string name="home">首页</string>
+    <string name="slide">划一划</string>
+    <string name="message">消息</string>
+    <string name="personal">我的</string>
+    <string name="subscribe">关注</string>
+</resources>
