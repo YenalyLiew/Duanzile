@@ -5,4 +5,22 @@
     <string name="message">消息</string>
     <string name="personal">我的</string>
     <string name="subscribe">关注</string>
+
+    <string name="subscribe_with_num">%s\n关注</string>
+    <string name="fans_with_num">%s\n粉丝</string>
+    <string name="ledou_with_num">%s\n乐豆</string>
+    <string name="tiezi">帖子</string>
+    <string name="comment">评论</string>
+    <string name="liked">赞过</string>
+    <string name="favorite">收藏</string>
+    <string name="settings">设置</string>
+    <string name="give_me_thumb_up">赏个好评</string>
+    <string name="login">登录</string>
+    <string name="phone_num">手机号</string>
+    <string name="password">密码</string>
+    <string name="get_verify_code">获取验证码</string>
+    <string name="toggle_login_way">切换登录方式</string>
+    <string name="verify_code_way">验证码方式</string>
+    <string name="edit_info">编辑资料</string>
+    <string name="dm">私信</string>
 </resources>

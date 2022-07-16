@@ -5,8 +5,7 @@ import androidx.appcompat.widget.Toolbar
 import com.yenaly.duanzile.R
 import com.yenaly.duanzile.databinding.FragmentMessageBinding
 import com.yenaly.duanzile.ui.activity.IToggleToolbar
-import com.yenaly.duanzile.ui.activity.MainActivity
-import com.yenaly.duanzile.ui.viewmodel.MessageViewModel
+import com.yenaly.duanzile.ui.viewmodel.main.MessageViewModel
 import com.yenaly.yenaly_libs.base.YenalyFragment
 
 /**

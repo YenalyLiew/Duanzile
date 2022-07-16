@@ -8,12 +8,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.yenaly.duanzile.R
 import com.yenaly.duanzile.databinding.FragmentHomeBinding
 import com.yenaly.duanzile.ui.activity.IToggleToolbar
-import com.yenaly.duanzile.ui.activity.MainActivity
 import com.yenaly.duanzile.ui.fragment.home.AllPicFragment
 import com.yenaly.duanzile.ui.fragment.home.AllTextFragment
 import com.yenaly.duanzile.ui.fragment.home.LatestFragment
 import com.yenaly.duanzile.ui.fragment.home.RecommendFragment
-import com.yenaly.duanzile.ui.viewmodel.HomeViewModel
+import com.yenaly.duanzile.ui.viewmodel.main.HomeViewModel
 import com.yenaly.yenaly_libs.base.YenalyFragment
 
 /**

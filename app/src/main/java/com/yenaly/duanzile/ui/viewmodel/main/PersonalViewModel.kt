@@ -1,6 +1,7 @@
-package com.yenaly.duanzile.ui.viewmodel
+package com.yenaly.duanzile.ui.viewmodel.main
 
 import android.app.Application
+import com.yenaly.duanzile.ui.viewmodel.MainViewModel
 
 /**
  * @project Duanzile
@@ -8,4 +9,5 @@ import android.app.Application
  * @time 2022/07/15 015 15:57
  */
 class PersonalViewModel(application: Application) : MainViewModel(application) {
+
 }

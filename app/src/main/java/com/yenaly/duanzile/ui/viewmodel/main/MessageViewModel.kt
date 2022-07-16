@@ -1,6 +1,7 @@
-package com.yenaly.duanzile.ui.viewmodel
+package com.yenaly.duanzile.ui.viewmodel.main
 
 import android.app.Application
+import com.yenaly.duanzile.ui.viewmodel.MainViewModel
 
 /**
  * @project Duanzile

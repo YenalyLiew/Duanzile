@@ -2,10 +2,12 @@ package com.yenaly.duanzile.logic
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.liveData
-import androidx.paging.toLiveData
-import com.yenaly.duanzile.logic.network.DuanzileNetwork
+import com.yenaly.duanzile.logic.model.DuanzileModel
 import com.yenaly.duanzile.logic.network.DuanziPagingSource
+import com.yenaly.duanzile.logic.network.DuanzileNetwork
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 /**
  * @project Duanzile
@@ -60,4 +62,51 @@ object NetworkRepo {
             }
         }
     ).flow
+
+    fun loginByPassword(phone: String, password: String) = makeRequest(
+        service = { DuanzileNetwork.loginService.loginByPassword(phone, password) },
+        success = { it.data }
+    )
+
+    fun loginByVerifyCode(phone: String, code: String) = makeRequest(
+        service = { DuanzileNetwork.loginService.loginByVerifyCode(phone, code) },
+        success = { it.data }
+    )
+
+    fun getLoginVerifyCode(phone: String) = makeRequest(
+        service = { DuanzileNetwork.loginService.getLoginVerifyCode(phone) },
+        success = { it.msg }
+    )
+
+    fun like(id: String, status: Boolean) = makeRequest(
+        service = { DuanzileNetwork.generalService.like(id, status.toString()) },
+        success = { it.msg }
+    )
+
+    fun unlike(id: String, status: Boolean) = makeRequest(
+        service = { DuanzileNetwork.generalService.unlike(id, status.toString()) },
+        success = { it.msg }
+    )
+
+    fun getCurrentUserInfo() = makeRequest(
+        service = { DuanzileNetwork.userService.getLoginUserInfo() },
+        success = { it.data }
+    )
+
+    private fun <T : DuanzileModel, R> makeRequest(
+        service: suspend () -> T,
+        success: (T) -> R
+    ) = flow {
+        val result = try {
+            val response = service.invoke()
+            if (response.code == 200) {
+                Result.success(success.invoke(response))
+            } else {
+                Result.failure(IllegalStateException(response.msg))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+        emit(result)
+    }.flowOn(Dispatchers.IO)
 }

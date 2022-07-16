@@ -1,8 +1,9 @@
 package com.yenaly.duanzile.ui.activity
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
+import com.google.android.material.button.MaterialButton
 import com.yenaly.duanzile.R
 import com.yenaly.duanzile.databinding.ActivityMainBinding
 import com.yenaly.duanzile.ui.fragment.HomeFragment
@@ -14,6 +15,7 @@ import com.yenaly.yenaly_libs.base.YenalyActivity
 import com.yenaly.yenaly_libs.utils.SystemStatusUtil
 import com.yenaly.yenaly_libs.utils.isAppDarkMode
 import com.yenaly.yenaly_libs.utils.setSystemBarIconLightMode
+import com.yenaly.yenaly_libs.utils.showShortToast
 import com.yenaly.yenaly_libs.utils.view.BottomNavigationViewMediator
 import com.yenaly.yenaly_libs.utils.view.toggleBottomNavBehavior
 
@@ -60,6 +62,54 @@ class MainActivity : YenalyActivity<ActivityMainBinding, MainViewModel>() {
                 binding.toolbar.setTitleTextColor(Color.BLACK)
                 binding.toolbar.setSubtitleTextColor(Color.BLACK)
                 window.setSystemBarIconLightMode(!isAppDarkMode)
+            }
+        }
+    }
+
+    fun MaterialButton.like(
+        id: String,
+        status: Boolean,
+        likeAction: MaterialButton.() -> Unit,
+        cancelLikeAction: MaterialButton.() -> Unit
+    ) {
+        lifecycleScope.launchWhenStarted {
+            viewModel.like(id, status).collect { result ->
+                result.getOrNull()?.let {
+                    if (status) {
+                        this@like.apply(likeAction)
+                        showShortToast("点赞成功")
+                    } else {
+                        this@like.apply(cancelLikeAction)
+                        showShortToast("取消点赞成功")
+                    }
+                } ?: result.exceptionOrNull()?.let { e ->
+                    e.printStackTrace()
+                    showShortToast(e.message)
+                }
+            }
+        }
+    }
+
+    fun MaterialButton.unlike(
+        id: String,
+        status: Boolean,
+        unlikeAction: MaterialButton.() -> Unit,
+        cancelUnlikeAction: MaterialButton.() -> Unit
+    ) {
+        lifecycleScope.launchWhenStarted {
+            viewModel.unlike(id, status).collect { result ->
+                result.getOrNull()?.let {
+                    if (status) {
+                        this@unlike.apply(unlikeAction)
+                        showShortToast("点踩成功")
+                    } else {
+                        this@unlike.apply(cancelUnlikeAction)
+                        showShortToast("取消点踩成功")
+                    }
+                } ?: result.exceptionOrNull()?.let { e ->
+                    e.printStackTrace()
+                    showShortToast(e.message)
+                }
             }
         }
     }

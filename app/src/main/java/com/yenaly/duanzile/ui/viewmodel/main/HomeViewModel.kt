@@ -1,9 +1,10 @@
-package com.yenaly.duanzile.ui.viewmodel
+package com.yenaly.duanzile.ui.viewmodel.main
 
 import android.app.Application
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.yenaly.duanzile.logic.NetworkRepo
+import com.yenaly.duanzile.ui.viewmodel.MainViewModel
 
 /**
  * @project Duanzile

@@ -1,7 +1,6 @@
 package com.yenaly.duanzile.ui.adapter
 
 import android.content.Context
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +11,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.yenaly.duanzile.DECRYPT_KEY
 import com.yenaly.duanzile.R
 import com.yenaly.duanzile.databinding.ItemSlideVideoBinding
+import com.yenaly.duanzile.ftpDecrypt
 import com.yenaly.duanzile.logic.model.DuanziListModel
-import com.yenaly.yenaly_libs.utils.aesDecrypt
-import com.yenaly.yenaly_libs.utils.decodeToByteArrayByBase64
 
 /**
  * @project Duanzile
@@ -82,24 +79,8 @@ class SlideVideoRvAdapter :
 
             holder.binding.name.text = "@${item.user.nickName}"
             holder.binding.description.text = item.joke.content
-            val contentVideoThumbnailDecryptUrl =
-                String(
-                    item.joke.thumbURL.substringAfter("ftp://")
-                        .decodeToByteArrayByBase64(Base64.NO_WRAP)
-                        .aesDecrypt(
-                            DECRYPT_KEY.toByteArray(),
-                            algorithm = "AES/ECB/PKCS5Padding"
-                        )
-                )
-            val contentVideoDecryptUrl =
-                String(
-                    item.joke.videoURL.substringAfter("ftp://")
-                        .decodeToByteArrayByBase64()
-                        .aesDecrypt(
-                            DECRYPT_KEY.toByteArray(),
-                            algorithm = "AES/ECB/PKCS5Padding"
-                        )
-                )
+            val contentVideoThumbnailDecryptUrl = item.joke.thumbURL.ftpDecrypt()
+            val contentVideoDecryptUrl = item.joke.videoURL.ftpDecrypt()
             holder.binding.video.setUp(contentVideoDecryptUrl, null)
             Glide.with(context).load(contentVideoThumbnailDecryptUrl)
                 .transition(DrawableTransitionOptions.withCrossFade())

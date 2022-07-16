@@ -8,9 +8,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.yenaly.duanzile.R
 import com.yenaly.duanzile.databinding.FragmentSlideVideoBinding
 import com.yenaly.duanzile.ui.activity.IToggleToolbar
-import com.yenaly.duanzile.ui.activity.MainActivity
 import com.yenaly.duanzile.ui.adapter.SlideVideoRvAdapter
-import com.yenaly.duanzile.ui.viewmodel.SlideVideoViewModel
+import com.yenaly.duanzile.ui.viewmodel.main.SlideVideoViewModel
 import com.yenaly.yenaly_libs.base.YenalyFragment
 import com.yenaly.yenaly_libs.utils.unsafeLazy
 import kotlinx.coroutines.flow.collectLatest

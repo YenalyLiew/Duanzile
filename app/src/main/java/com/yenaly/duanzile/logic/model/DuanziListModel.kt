@@ -8,10 +8,10 @@ import com.google.gson.annotations.SerializedName
  * @time 2022/07/14 014 15:11
  */
 data class DuanziListModel(
-    val code: Int,
+    override val code: Int,
     val data: List<Datum>,
-    val msg: String
-) {
+    override val msg: String
+) : DuanzileModel {
     data class Datum(
         val info: Info,
         val joke: Joke,
@@ -19,12 +19,12 @@ data class DuanziListModel(
     ) {
         data class Info(
             val commentNum: Long,
-            val disLikeNum: Long,
+            var disLikeNum: Long,
             val isAttention: Boolean,
-            val isLike: Boolean,
-            val isUnlike: Boolean,
-            val likeNum: Long,
-            val shareNum: Long
+            var isLike: Boolean,
+            var isUnlike: Boolean,
+            var likeNum: Long,
+            var shareNum: Long
         )
 
         data class Joke(
