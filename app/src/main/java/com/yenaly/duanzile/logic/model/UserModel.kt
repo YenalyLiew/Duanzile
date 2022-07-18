@@ -11,33 +11,27 @@ data class UserModel(
     override val code: Int,
     val data: Data,
     override val msg: String
-) : DuanzileModel {
+) : IDuanzileModel {
     data class Data(
-        val info: Info,
-        val user: User
-    ) {
-        data class Info(
-            val attentionNum: Long,
-            val experienceNum: Long,
-            val fansNum: Long,
-            val likeNum: Long
-        )
+        val attentionNum: String,
+        val attentionState: Int,
+        val avatar: String,
+        val collectNum: String,
+        val commentNum: String,
+        val cover: String,
+        val fansNum: String,
+        val joinTime: String,
+        val jokeLikeNum: String,
+        val jokesNum: String,
+        val likeNum: String,
+        val nickname: String,
 
-        data class User(
-            val avatar: String,
-            val birthday: String,
-            val inviteCode: String,
-            val invitedCode: String,
-            val nickname: String,
-            val sex: String,
-            val signature: String,
+        @SerializedName("sigbature")
+        val signature: String,
 
-            @SerializedName(value = "userId")
-            val userID: Long,
-
-            val userPhone: String
-        )
-    }
+        @SerializedName(value = "userId")
+        val userID: Long
+    )
 }
 
 

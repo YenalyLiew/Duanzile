@@ -12,12 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.yenaly.duanzile.R
+import com.yenaly.duanzile.TO_USER_ACTIVITY_ID
 import com.yenaly.duanzile.databinding.ItemDuanziBinding
 import com.yenaly.duanzile.ftpDecrypt
 import com.yenaly.duanzile.isLogin
 import com.yenaly.duanzile.logic.model.DuanziListModel
 import com.yenaly.duanzile.ui.activity.MainActivity
+import com.yenaly.duanzile.ui.activity.UserActivity
 import com.yenaly.yenaly_libs.utils.showShortToast
+import com.yenaly.yenaly_libs.utils.startActivity
 import com.yenaly.yenaly_libs.utils.view.clickTrigger
 
 /**
@@ -25,8 +28,8 @@ import com.yenaly.yenaly_libs.utils.view.clickTrigger
  * @author Yenaly Liew
  * @time 2022/07/14 014 16:06
  */
-class HomeRvAdapter :
-    PagingDataAdapter<DuanziListModel.Datum, HomeRvAdapter.ViewHolder>(COMPARATOR) {
+class DuanziRvAdapter :
+    PagingDataAdapter<DuanziListModel.Datum, DuanziRvAdapter.ViewHolder>(COMPARATOR) {
 
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<DuanziListModel.Datum>() {
@@ -121,6 +124,13 @@ class HomeRvAdapter :
             posterImageView.scaleType = ImageView.ScaleType.CENTER_CROP
         }
         (context as? MainActivity)?.apply {
+            viewHolder.binding.avatar.setOnClickListener {
+                val position = viewHolder.bindingAdapterPosition
+                val item = getItem(position)
+                item?.let {
+                    startActivity<UserActivity>(TO_USER_ACTIVITY_ID to item.user.userID)
+                }
+            }
             viewHolder.binding.btnThumbUp.clickTrigger(lifecycle) {
                 if (!isLogin) {
                     showShortToast("请先登录")

@@ -1,7 +1,7 @@
 package com.yenaly.duanzile.logic.network
 
 import com.yenaly.duanzile.logic.model.GeneralModel
-import com.yenaly.duanzile.logic.model.LoginUserModel
+import com.yenaly.duanzile.logic.model.LoginResponseModel
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -15,13 +15,13 @@ interface LoginService : DuanzileService {
     suspend fun loginByPassword(
         @Query("phone") phone: String,
         @Query("psw") password: String
-    ): LoginUserModel
+    ): LoginResponseModel
 
     @POST("user/login/code")
     suspend fun loginByVerifyCode(
         @Query("phone") phone: String,
         @Query("code") code: String
-    ): LoginUserModel
+    ): LoginResponseModel
 
     @POST("user/login/get_code")
     suspend fun getLoginVerifyCode(

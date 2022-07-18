@@ -5,7 +5,7 @@ package com.yenaly.duanzile.logic.model
  * @author Yenaly Liew
  * @time 2022/07/16 016 15:02
  */
-interface DuanzileModel {
+interface IDuanzileModel {
     val code: Int
     val msg: String
 }

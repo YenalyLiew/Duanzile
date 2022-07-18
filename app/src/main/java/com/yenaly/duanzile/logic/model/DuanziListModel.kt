@@ -11,11 +11,20 @@ data class DuanziListModel(
     override val code: Int,
     val data: List<Datum>,
     override val msg: String
-) : DuanzileModel {
+) : IDuanzileModel {
     data class Datum(
         val info: Info,
         val joke: Joke,
-        val user: User
+        val user: User,
+
+        @SerializedName("cover")
+        val forPersonalVideoCover: String?,
+
+        @SerializedName("jokeId")
+        val forPersonalVideoJokeID: Long,
+
+        @SerializedName("likeNum")
+        val forPersonalVideoLikeNum: String?
     ) {
         data class Info(
             val commentNum: Long,

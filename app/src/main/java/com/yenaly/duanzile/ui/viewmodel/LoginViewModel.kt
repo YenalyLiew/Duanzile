@@ -3,7 +3,7 @@ package com.yenaly.duanzile.ui.viewmodel
 import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.yenaly.duanzile.logic.NetworkRepo
-import com.yenaly.duanzile.logic.model.LoginUserModel
+import com.yenaly.duanzile.logic.model.LoginResponseModel
 import com.yenaly.yenaly_libs.base.YenalyViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -16,11 +16,11 @@ import kotlinx.coroutines.launch
  */
 class LoginViewModel(application: Application) : YenalyViewModel(application) {
     private val _pswFlow =
-        MutableSharedFlow<Result<LoginUserModel.Data>>()
+        MutableSharedFlow<Result<LoginResponseModel.Data>>()
     val pswFlow = _pswFlow.asSharedFlow()
 
     private val _codeFlow =
-        MutableSharedFlow<Result<LoginUserModel.Data>>()
+        MutableSharedFlow<Result<LoginResponseModel.Data>>()
     val codeFlow = _codeFlow.asSharedFlow()
 
     private val _getCodeFlow =

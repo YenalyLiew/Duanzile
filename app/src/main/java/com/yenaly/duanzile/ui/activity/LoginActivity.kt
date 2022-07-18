@@ -12,7 +12,6 @@ import com.yenaly.duanzile.login
 import com.yenaly.duanzile.ui.viewmodel.LoginViewModel
 import com.yenaly.yenaly_libs.base.YenalyActivity
 import com.yenaly.yenaly_libs.utils.SystemStatusUtil
-import com.yenaly.yenaly_libs.utils.isAppDarkMode
 import com.yenaly.yenaly_libs.utils.setSystemBarIconLightMode
 import com.yenaly.yenaly_libs.utils.showShortToast
 import com.yenaly.yenaly_libs.utils.view.clickTrigger
@@ -37,7 +36,7 @@ class LoginActivity : YenalyActivity<ActivityLoginBinding, LoginViewModel>() {
 
     override fun setUiStyle() {
         SystemStatusUtil.fullScreen(window, true)
-        window.setSystemBarIconLightMode(!isAppDarkMode)
+        window.setSystemBarIconLightMode(true)
     }
 
     override fun initData(savedInstanceState: Bundle?) {

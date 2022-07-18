@@ -2,7 +2,7 @@ package com.yenaly.duanzile.logic
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.yenaly.duanzile.logic.model.DuanzileModel
+import com.yenaly.duanzile.logic.model.IDuanzileModel
 import com.yenaly.duanzile.logic.network.DuanziPagingSource
 import com.yenaly.duanzile.logic.network.DuanzileNetwork
 import kotlinx.coroutines.Dispatchers
@@ -88,12 +88,53 @@ object NetworkRepo {
         success = { it.msg }
     )
 
-    fun getCurrentUserInfo() = makeRequest(
+    fun getLoginUserInfo() = makeRequest(
         service = { DuanzileNetwork.userService.getLoginUserInfo() },
         success = { it.data }
     )
 
-    private fun <T : DuanzileModel, R> makeRequest(
+    fun getUserInfo(id: String) = makeRequest(
+        service = { DuanzileNetwork.userService.getUserInfo(id) },
+        success = { it.data }
+    )
+
+    fun getUserDuanzi(id: String) = Pager(
+        config = PagingConfig(pageSize = PAGE_SIZE),
+        pagingSourceFactory = {
+            DuanziPagingSource { page ->
+                DuanzileNetwork.userService.getUserDuanzi(id, page)
+            }
+        }
+    ).flow
+
+    fun getUserDuanziVideo(id: String) = Pager(
+        config = PagingConfig(pageSize = PAGE_SIZE),
+        pagingSourceFactory = {
+            DuanziPagingSource { page ->
+                DuanzileNetwork.userService.getUserDuanziVideo(id, page)
+            }
+        }
+    ).flow
+
+    fun getUserLikedDuanzi(id: String) = Pager(
+        config = PagingConfig(pageSize = PAGE_SIZE),
+        pagingSourceFactory = {
+            DuanziPagingSource { page ->
+                DuanzileNetwork.userService.getUserLikedDuanzi(id, page)
+            }
+        }
+    ).flow
+
+    fun getUserLikedDuanziVideo(id: String) = Pager(
+        config = PagingConfig(pageSize = PAGE_SIZE),
+        pagingSourceFactory = {
+            DuanziPagingSource { page ->
+                DuanzileNetwork.userService.getUserLikedDuanziVideo(id, page)
+            }
+        }
+    ).flow
+
+    private fun <T : IDuanzileModel, R> makeRequest(
         service: suspend () -> T,
         success: (T) -> R
     ) = flow {

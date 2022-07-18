@@ -13,23 +13,32 @@
         tools:context=".ui.activity.UserActivity">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
 
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:titleEnabled="false">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    app:layout_collapseMode="parallax">
 
                     <ImageView
                         android:id="@+id/iv_user_big"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_height="180dp"
                         android:contentDescription="@null"
+                        android:fitsSystemWindows="true"
+                        android:scaleType="centerCrop"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
@@ -37,7 +46,7 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="130dp"
+                        android:layout_marginTop="150dp"
                         android:contentDescription="@null"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +55,6 @@
                         android:id="@+id/edit_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:text="@string/edit_info"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +64,6 @@
                         android:id="@+id/subscribe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:text="@string/subscribe"
                         app:icon="@drawable/ic_baseline_add_24"
@@ -67,7 +74,6 @@
                         android:id="@+id/dm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
                         android:text="@string/dm"
                         app:layout_constraintEnd_toStartOf="@id/subscribe"
@@ -115,7 +121,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
                         android:orientation="horizontal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/motto">
@@ -151,22 +156,36 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize" />
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tl_user"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="?android:colorBackground">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tl_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:tabGravity="start"
+                    app:tabMode="fixed" />
+
+            </FrameLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
+
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_user"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -13,7 +13,6 @@ import com.yenaly.duanzile.ui.fragment.SlideVideoFragment
 import com.yenaly.duanzile.ui.viewmodel.MainViewModel
 import com.yenaly.yenaly_libs.base.YenalyActivity
 import com.yenaly.yenaly_libs.utils.SystemStatusUtil
-import com.yenaly.yenaly_libs.utils.isAppDarkMode
 import com.yenaly.yenaly_libs.utils.setSystemBarIconLightMode
 import com.yenaly.yenaly_libs.utils.showShortToast
 import com.yenaly.yenaly_libs.utils.view.BottomNavigationViewMediator
@@ -23,7 +22,7 @@ class MainActivity : YenalyActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun setUiStyle() {
         SystemStatusUtil.fullScreen(window, true)
-        window.setSystemBarIconLightMode(!isAppDarkMode)
+        window.setSystemBarIconLightMode(true)
     }
 
     override fun initData(savedInstanceState: Bundle?) {
@@ -61,7 +60,7 @@ class MainActivity : YenalyActivity<ActivityMainBinding, MainViewModel>() {
                 )
                 binding.toolbar.setTitleTextColor(Color.BLACK)
                 binding.toolbar.setSubtitleTextColor(Color.BLACK)
-                window.setSystemBarIconLightMode(!isAppDarkMode)
+                window.setSystemBarIconLightMode(true)
             }
         }
     }

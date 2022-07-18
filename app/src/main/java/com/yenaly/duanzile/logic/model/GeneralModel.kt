@@ -9,4 +9,4 @@ data class GeneralModel(
     override val code: Int,
     override val msg: String,
     val data: String
-) : DuanzileModel
+) : IDuanzileModel

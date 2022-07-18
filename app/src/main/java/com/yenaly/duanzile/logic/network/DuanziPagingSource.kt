@@ -12,7 +12,7 @@ import com.yenaly.yenaly_libs.utils.decodeToByteArrayByBase64
  * @time 2022/07/14 014 17:08
  */
 class DuanziPagingSource(
-    private val service: suspend () -> DuanziListModel
+    private val service: suspend (Int) -> DuanziListModel
 ) : PagingSource<Int, DuanziListModel.Datum>() {
 
     override fun getRefreshKey(state: PagingState<Int, DuanziListModel.Datum>): Int? {
@@ -25,14 +25,17 @@ class DuanziPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DuanziListModel.Datum> {
         return try {
             val page = params.key ?: 1
-            val response = service.invoke()
+            val response = service.invoke(page)
             val prevKey = if (page > 1) page - 1 else null
-            val nextKey = page + 1
-            val decryptData = response.data.filter {
-                it.joke.videoURL.isBase64Format() && it.joke.imageURL.isBase64Format() && it.joke.thumbURL.isBase64Format()
-            }
+            val nextKey = if (response.data.isNotEmpty()) page + 1 else null
+            val decryptData = if (response.data.any { it.forPersonalVideoLikeNum == null }) {
+                response.data.filter {
+                    it.joke.videoURL.isBase64Format() && it.joke.imageURL.isBase64Format() && it.joke.thumbURL.isBase64Format()
+                }
+            } else response.data
             LoadResult.Page(decryptData, prevKey, nextKey)
         } catch (e: Exception) {
+            e.printStackTrace()
             LoadResult.Error(e)
         }
     }

@@ -8,17 +8,18 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.yenaly.duanzile.R
+import com.yenaly.duanzile.*
 import com.yenaly.duanzile.databinding.FragmentPersonalBinding
-import com.yenaly.duanzile.ftpDecrypt
-import com.yenaly.duanzile.isLogin
+import com.yenaly.duanzile.logic.model.LoginUserModel
 import com.yenaly.duanzile.ui.activity.IToggleToolbar
 import com.yenaly.duanzile.ui.activity.LoginActivity
+import com.yenaly.duanzile.ui.activity.UserActivity
 import com.yenaly.duanzile.ui.viewmodel.main.PersonalViewModel
 import com.yenaly.yenaly_libs.base.YenalyFragment
 import com.yenaly.yenaly_libs.utils.showShortToast
 import com.yenaly.yenaly_libs.utils.sp
 import com.yenaly.yenaly_libs.utils.span.SpannedTextGenerator
+import com.yenaly.yenaly_libs.utils.startActivity
 import com.yenaly.yenaly_libs.utils.unsafeLazy
 
 /**
@@ -40,8 +41,6 @@ class PersonalFragment : YenalyFragment<FragmentPersonalBinding, PersonalViewMod
     private val loginLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                // todo
-                initClick()
                 viewModel.getCurrentUserInfo()
             }
         }
@@ -53,16 +52,29 @@ class PersonalFragment : YenalyFragment<FragmentPersonalBinding, PersonalViewMod
             binding.name.text = "请登录"
             binding.motto.text = "点击此处登录后体验更多精彩"
             toggleUserInfo("-", "-", "-")
+            clickViewArray.forEach { view ->
+                view.setOnClickListener {
+                    showShortToast("请先登录哦")
+                    val intent = Intent(activity, LoginActivity::class.java)
+                    loginLauncher.launch(intent)
+                }
+            }
         } else {
-            viewModel.getCurrentUserInfo()
+            viewModel.getSingleCurrentUserInfo()
         }
-        initClick()
+
+        binding.settings.setOnClickListener {
+
+        }
     }
 
     override fun liveDataObserve() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.currentUserInfoFlow.collect { result ->
                 result.getOrNull()?.let { data ->
+
+                    initAfterLoginClick(data)
+
                     Glide.with(requireContext()).load(data.user.avatar.ftpDecrypt())
                         .circleCrop()
                         .transition(DrawableTransitionOptions.withCrossFade())
@@ -88,46 +100,40 @@ class PersonalFragment : YenalyFragment<FragmentPersonalBinding, PersonalViewMod
         toolbar.setSubtitle(R.string.app_name)
     }
 
-    private fun initClick() {
-        if (isLogin) {
-            binding.child1.setOnClickListener {
-
-            }
-
-            binding.fans.setOnClickListener {
-
-            }
-            binding.subscribe.setOnClickListener {
-
-            }
-            binding.ledou.setOnClickListener {
-
-            }
-
-            binding.tiezi.setOnClickListener {
-
-            }
-            binding.comment.setOnClickListener {
-
-            }
-            binding.liked.setOnClickListener {
-
-            }
-            binding.fav.setOnClickListener {
-
-            }
-        } else {
-            clickViewArray.forEach { view ->
-                view.setOnClickListener {
-                    showShortToast("请先登录哦")
-                    val intent = Intent(activity, LoginActivity::class.java)
-                    loginLauncher.launch(intent)
-                }
-            }
+    private fun initAfterLoginClick(data: LoginUserModel.Data) {
+        binding.child1.setOnClickListener {
+            startActivity<UserActivity>(
+                values = arrayOf<Pair<String, Any>>(
+                    TO_USER_ACTIVITY_ID to data.user.userID,
+                    TO_USER_ACTIVITY_IS_SELF to true
+                )
+            )
         }
-        binding.settings.setOnClickListener {
+
+        binding.fans.setOnClickListener {
 
         }
+        binding.subscribe.setOnClickListener {
+
+        }
+        binding.ledou.setOnClickListener {
+
+        }
+
+        binding.tiezi.setOnClickListener {
+
+        }
+        binding.comment.setOnClickListener {
+
+        }
+        binding.liked.setOnClickListener {
+
+        }
+        binding.fav.setOnClickListener {
+
+        }
+
+
     }
 
     private fun toggleUserInfo(subscribeNum: String, fanNum: String, ledouNum: String) {

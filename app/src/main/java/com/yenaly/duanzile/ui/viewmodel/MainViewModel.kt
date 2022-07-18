@@ -4,11 +4,9 @@ import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.yenaly.duanzile.logic.NetworkRepo
 import com.yenaly.duanzile.logic.model.LoginUserModel
-import com.yenaly.duanzile.logic.model.UserModel
 import com.yenaly.yenaly_libs.base.YenalyViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
 
 /**
@@ -24,12 +22,18 @@ open class MainViewModel(application: Application) : YenalyViewModel(application
         NetworkRepo.unlike(id, status)
 
     private val _currentUserInfoFlow =
-        MutableSharedFlow<Result<UserModel.Data>>()
+        MutableSharedFlow<Result<LoginUserModel.Data>>(replay = 1)
     val currentUserInfoFlow = _currentUserInfoFlow.asSharedFlow()
 
     fun getCurrentUserInfo() {
         viewModelScope.launch {
-            NetworkRepo.getCurrentUserInfo().collect(_currentUserInfoFlow::emit)
+            NetworkRepo.getLoginUserInfo().collect(_currentUserInfoFlow::emit)
+        }
+    }
+
+    fun getSingleCurrentUserInfo() {
+        viewModelScope.singleLaunch(0) {
+            NetworkRepo.getLoginUserInfo().collect(_currentUserInfoFlow::emit)
         }
     }
 }

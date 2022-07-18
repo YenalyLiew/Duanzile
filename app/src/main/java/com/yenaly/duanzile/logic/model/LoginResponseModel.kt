@@ -5,25 +5,19 @@ import com.google.gson.annotations.SerializedName
 /**
  * @project Duanzile
  * @author Yenaly Liew
- * @time 2022/07/17 017 01:16
+ * @time 2022/07/16 016 12:01
  */
-data class LoginUserModel(
+data class LoginResponseModel(
     override val code: Int,
-    override val msg: String,
-    val data: Data
+    val data: Data,
+    override val msg: String
 ) : IDuanzileModel {
     data class Data(
-        val info: Info,
-        val user: User
+        val token: String,
+        val type: String,
+        val userInfo: UserInfo
     ) {
-        data class Info(
-            val attentionNum: Long,
-            val experienceNum: Long,
-            val fansNum: Long,
-            val likeNum: Long
-        )
-
-        data class User(
+        data class UserInfo(
             val avatar: String,
             val birthday: String,
             val inviteCode: String,
