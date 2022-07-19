@@ -16,7 +16,7 @@ import com.yenaly.duanzile.databinding.ItemDuanziSimplifiedBinding
 import com.yenaly.duanzile.ftpDecrypt
 import com.yenaly.duanzile.isLogin
 import com.yenaly.duanzile.logic.model.DuanziListModel
-import com.yenaly.duanzile.ui.activity.MainActivity
+import com.yenaly.duanzile.ui.activity.UserActivity
 import com.yenaly.yenaly_libs.utils.showShortToast
 import com.yenaly.yenaly_libs.utils.view.clickTrigger
 
@@ -114,7 +114,7 @@ class SimpleDuanziRvAdapter :
             findViewById<View>(cn.jzvd.R.id.layout_top).background = null
             posterImageView.scaleType = ImageView.ScaleType.CENTER_CROP
         }
-        (context as? MainActivity)?.apply {
+        (context as? UserActivity)?.apply {
             viewHolder.binding.btnThumbUp.clickTrigger(lifecycle) {
                 if (!isLogin) {
                     showShortToast("请先登录")

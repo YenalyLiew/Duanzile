@@ -2,6 +2,7 @@ package com.yenaly.duanzile.ui.fragment.user
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.yenaly.duanzile.TO_TEXT_VIDEO_SPLIT_FRAGMENT
 import com.yenaly.duanzile.databinding.LayoutRvWithRefreshBinding
 import com.yenaly.duanzile.ui.adapter.SimpleDuanziRvAdapter
@@ -24,9 +25,23 @@ class TextPhotoItemFragment : YenalyFragment<LayoutRvWithRefreshBinding, UserVie
 
     override fun initData(savedInstanceState: Bundle?) {
         binding.rvHome.adapter = adapter
+        binding.srlHome.setOnRefreshListener {
+            getDuanzi()
+        }
     }
 
     override fun liveDataObserve() {
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            adapter.loadStateFlow.collect { state ->
+                binding.srlHome.isRefreshing = state.source.refresh is LoadState.Loading
+            }
+        }
+
+        getDuanzi()
+    }
+
+    private fun getDuanzi() {
         if (type == WORK) {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.getUserDuanzi(viewModel.userID).collectLatest(adapter::submitData)

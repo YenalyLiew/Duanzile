@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.yenaly.duanzile.logic.NetworkRepo
 import com.yenaly.duanzile.logic.model.LoginResponseModel
-import com.yenaly.yenaly_libs.base.YenalyViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -14,7 +13,7 @@ import kotlinx.coroutines.launch
  * @author Yenaly Liew
  * @time 2022/07/16 016 10:32
  */
-class LoginViewModel(application: Application) : YenalyViewModel(application) {
+class LoginViewModel(application: Application) : BaseViewModel(application) {
     private val _pswFlow =
         MutableSharedFlow<Result<LoginResponseModel.Data>>()
     val pswFlow = _pswFlow.asSharedFlow()

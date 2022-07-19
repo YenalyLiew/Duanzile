@@ -1,9 +1,7 @@
 package com.yenaly.duanzile.ui.fragment.user
 
 import android.os.Bundle
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.yenaly.duanzile.TO_TEXT_VIDEO_SPLIT_FRAGMENT

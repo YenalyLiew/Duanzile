@@ -5,9 +5,11 @@ import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import cn.jzvd.Jzvd
 import com.yenaly.duanzile.R
 import com.yenaly.duanzile.databinding.FragmentSlideVideoBinding
 import com.yenaly.duanzile.ui.activity.IToggleToolbar
+import com.yenaly.duanzile.ui.activity.MainActivity
 import com.yenaly.duanzile.ui.adapter.SlideVideoRvAdapter
 import com.yenaly.duanzile.ui.viewmodel.main.SlideVideoViewModel
 import com.yenaly.yenaly_libs.base.YenalyFragment
@@ -22,7 +24,7 @@ import kotlinx.coroutines.flow.collectLatest
 class SlideVideoFragment : YenalyFragment<FragmentSlideVideoBinding, SlideVideoViewModel>(),
     IToggleToolbar {
 
-    private val adapter by unsafeLazy { SlideVideoRvAdapter() }
+    private val adapter by unsafeLazy { SlideVideoRvAdapter(activity as? MainActivity) }
 
     override fun initData(savedInstanceState: Bundle?) {
         binding.vpSlide.orientation = ViewPager2.ORIENTATION_VERTICAL
@@ -40,5 +42,10 @@ class SlideVideoFragment : YenalyFragment<FragmentSlideVideoBinding, SlideVideoV
         toolbar.setSubtitle(R.string.app_name)
         toolbar.setTitleTextColor(Color.WHITE)
         toolbar.setSubtitleTextColor(Color.WHITE)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Jzvd.releaseAllVideos()
     }
 }

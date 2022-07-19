@@ -6,7 +6,6 @@ import androidx.paging.cachedIn
 import com.yenaly.duanzile.logic.NetworkRepo
 import com.yenaly.duanzile.logic.model.LoginUserModel
 import com.yenaly.duanzile.logic.model.UserModel
-import com.yenaly.yenaly_libs.base.YenalyViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
  * @author Yenaly Liew
  * @time 2022/07/16 016 21:20
  */
-class UserViewModel(application: Application) : YenalyViewModel(application) {
+class UserViewModel(application: Application) : BaseViewModel(application) {
 
     lateinit var userID: String
 
@@ -34,15 +33,15 @@ class UserViewModel(application: Application) : YenalyViewModel(application) {
         }
     }
 
-    fun getSingleUserInfo(id: String) {
-        viewModelScope.singleLaunch(0) {
-            NetworkRepo.getUserInfo(id).collect(_userFlow::emit)
-        }
-    }
-
-    fun getUserInfo(id: String) {
-        viewModelScope.launch {
-            NetworkRepo.getUserInfo(id).collect(_userFlow::emit)
+    fun getUserInfo(id: String, single: Boolean) {
+        if (single) {
+            viewModelScope.singleLaunch(0) {
+                NetworkRepo.getUserInfo(id).collect(_userFlow::emit)
+            }
+        } else {
+            viewModelScope.launch {
+                NetworkRepo.getUserInfo(id).collect(_userFlow::emit)
+            }
         }
     }
 

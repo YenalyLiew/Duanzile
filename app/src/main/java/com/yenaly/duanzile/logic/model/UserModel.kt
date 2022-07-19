@@ -14,7 +14,7 @@ data class UserModel(
 ) : IDuanzileModel {
     data class Data(
         val attentionNum: String,
-        val attentionState: Int,
+        var attentionState: Int,
         val avatar: String,
         val collectNum: String,
         val commentNum: String,

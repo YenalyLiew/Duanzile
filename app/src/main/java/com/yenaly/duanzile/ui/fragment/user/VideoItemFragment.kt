@@ -2,6 +2,7 @@ package com.yenaly.duanzile.ui.fragment.user
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.yenaly.duanzile.TO_TEXT_VIDEO_SPLIT_FRAGMENT
 import com.yenaly.duanzile.databinding.LayoutRvWithRefreshBinding
@@ -26,9 +27,23 @@ class VideoItemFragment : YenalyFragment<LayoutRvWithRefreshBinding, UserViewMod
     override fun initData(savedInstanceState: Bundle?) {
         binding.rvHome.layoutManager = GridLayoutManager(context, 3)
         binding.rvHome.adapter = adapter
+        binding.srlHome.setOnRefreshListener {
+            getVideo()
+        }
     }
 
     override fun liveDataObserve() {
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            adapter.loadStateFlow.collect { state ->
+                binding.srlHome.isRefreshing = state.source.refresh is LoadState.Loading
+            }
+        }
+
+        getVideo()
+    }
+
+    private fun getVideo() {
         if (type == WORK) {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.getUserDuanziVideo(viewModel.userID)

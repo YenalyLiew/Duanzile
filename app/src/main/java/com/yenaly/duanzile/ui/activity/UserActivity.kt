@@ -2,7 +2,9 @@ package com.yenaly.duanzile.ui.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.MenuItem
+import androidx.core.util.set
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -10,7 +12,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
+import com.yenaly.duanzile.R
 import com.yenaly.duanzile.TO_TEXT_VIDEO_SPLIT_FRAGMENT
 import com.yenaly.duanzile.TO_USER_ACTIVITY_ID
 import com.yenaly.duanzile.TO_USER_ACTIVITY_IS_SELF
@@ -31,6 +36,9 @@ class UserActivity : YenalyActivity<ActivityUserBinding, UserViewModel>() {
     private val isSelf by intentExtra(TO_USER_ACTIVITY_IS_SELF, false)
 
     private val tabText = arrayOf("作品", "喜欢", "评论", "收藏")
+    private val likeMap = SparseBooleanArray().apply {
+        set(0, false); set(1, false); set(2, true); set(3, true)
+    }
 
     override fun setUiStyle() {
         SystemStatusUtil.fullScreen(window, true)
@@ -40,7 +48,7 @@ class UserActivity : YenalyActivity<ActivityUserBinding, UserViewModel>() {
     override fun initData(savedInstanceState: Bundle?) {
         if (id != null) {
             viewModel.userID = id!!.toString()
-            viewModel.getSingleUserInfo(viewModel.userID)
+            viewModel.getUserInfo(viewModel.userID, true)
         } else {
             showShortToast("不正确的ID")
             finish()
@@ -94,6 +102,36 @@ class UserActivity : YenalyActivity<ActivityUserBinding, UserViewModel>() {
     private fun toggleUserInfo(data: UserModel.Data) {
 
         supportActionBar?.title = data.nickname
+
+        if (likeMap[data.attentionState]) {
+            binding.subscribe.setIconResource(R.drawable.ic_baseline_check_24)
+            binding.subscribe.text = "已关注"
+        } else {
+            binding.subscribe.setIconResource(R.drawable.ic_baseline_add_24)
+            binding.subscribe.text = "关注"
+        }
+
+        binding.subscribe.setOnClickListener {
+            subscribe(viewModel.userID, !likeMap[data.attentionState],
+                subscribeAction = {
+                    binding.subscribe.setIconResource(R.drawable.ic_baseline_check_24)
+                    binding.subscribe.text = "已关注"
+                    data.attentionState = 2
+                },
+                cancelSubscribeAction = {
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle("确定取消关注吗")
+                        .setPositiveButton("确定") { _, _ ->
+                            binding.subscribe.setIconResource(R.drawable.ic_baseline_add_24)
+                            binding.subscribe.text = "关注"
+                            data.attentionState = 0
+                            showShortToast("取关成功")
+                        }
+                        .setNegativeButton("取消", null)
+                        .show()
+                }
+            )
+        }
 
         SpannedTextGenerator.KotlinBuilder()
             .addText(data.likeNum, isBold = true, isNewLine = false)
@@ -157,5 +195,76 @@ class UserActivity : YenalyActivity<ActivityUserBinding, UserViewModel>() {
         TabLayoutMediator(binding.tlUser, binding.vpUser) { tab, position ->
             tab.text = tabText[position]
         }.attach()
+    }
+
+    fun MaterialButton.like(
+        id: String,
+        status: Boolean,
+        likeAction: MaterialButton.() -> Unit,
+        cancelLikeAction: MaterialButton.() -> Unit
+    ) {
+        lifecycleScope.launchWhenStarted {
+            viewModel.like(id, status).collect { result ->
+                result.getOrNull()?.let {
+                    if (status) {
+                        this@like.apply(likeAction)
+                        showShortToast("点赞成功")
+                    } else {
+                        this@like.apply(cancelLikeAction)
+                        showShortToast("取消点赞成功")
+                    }
+                } ?: result.exceptionOrNull()?.let { e ->
+                    e.printStackTrace()
+                    showShortToast(e.message)
+                }
+            }
+        }
+    }
+
+    fun MaterialButton.unlike(
+        id: String,
+        status: Boolean,
+        unlikeAction: MaterialButton.() -> Unit,
+        cancelUnlikeAction: MaterialButton.() -> Unit
+    ) {
+        lifecycleScope.launchWhenStarted {
+            viewModel.unlike(id, status).collect { result ->
+                result.getOrNull()?.let {
+                    if (status) {
+                        this@unlike.apply(unlikeAction)
+                        showShortToast("点踩成功")
+                    } else {
+                        this@unlike.apply(cancelUnlikeAction)
+                        showShortToast("取消点踩成功")
+                    }
+                } ?: result.exceptionOrNull()?.let { e ->
+                    e.printStackTrace()
+                    showShortToast(e.message)
+                }
+            }
+        }
+    }
+
+    fun subscribe(
+        id: String,
+        status: Boolean,
+        subscribeAction: () -> Unit,
+        cancelSubscribeAction: () -> Unit
+    ) {
+        lifecycleScope.launchWhenStarted {
+            viewModel.subscribe(id, status).collect { result ->
+                result.getOrNull()?.let {
+                    if (status) {
+                        subscribeAction.invoke()
+                        showShortToast("关注成功")
+                    } else {
+                        cancelSubscribeAction.invoke()
+                    }
+                } ?: result.exceptionOrNull()?.let { e ->
+                    e.printStackTrace()
+                    showShortToast(e.message)
+                }
+            }
+        }
     }
 }

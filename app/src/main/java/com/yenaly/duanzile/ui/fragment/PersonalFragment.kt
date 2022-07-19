@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -16,11 +18,9 @@ import com.yenaly.duanzile.ui.activity.LoginActivity
 import com.yenaly.duanzile.ui.activity.UserActivity
 import com.yenaly.duanzile.ui.viewmodel.main.PersonalViewModel
 import com.yenaly.yenaly_libs.base.YenalyFragment
-import com.yenaly.yenaly_libs.utils.showShortToast
-import com.yenaly.yenaly_libs.utils.sp
+import com.yenaly.yenaly_libs.utils.*
 import com.yenaly.yenaly_libs.utils.span.SpannedTextGenerator
-import com.yenaly.yenaly_libs.utils.startActivity
-import com.yenaly.yenaly_libs.utils.unsafeLazy
+import kotlinx.coroutines.launch
 
 /**
  * @project Duanzile
@@ -41,7 +41,7 @@ class PersonalFragment : YenalyFragment<FragmentPersonalBinding, PersonalViewMod
     private val loginLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                viewModel.getCurrentUserInfo()
+                viewModel.getCurrentUserInfo(false)
             }
         }
 
@@ -59,10 +59,11 @@ class PersonalFragment : YenalyFragment<FragmentPersonalBinding, PersonalViewMod
                     loginLauncher.launch(intent)
                 }
             }
-        } else {
-            viewModel.getSingleCurrentUserInfo()
         }
 
+        binding.giveMeThumbUp.setOnClickListener {
+            browse("https://github.com/YenalyLiew/Duanzile")
+        }
         binding.settings.setOnClickListener {
 
         }
@@ -98,6 +99,13 @@ class PersonalFragment : YenalyFragment<FragmentPersonalBinding, PersonalViewMod
     override fun toggleToolbar(toolbar: Toolbar) {
         toolbar.title = "我的"
         toolbar.setSubtitle(R.string.app_name)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isLogin) {
+            viewModel.getCurrentUserInfo(false)
+        }
     }
 
     private fun initAfterLoginClick(data: LoginUserModel.Data) {

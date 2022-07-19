@@ -29,7 +29,7 @@ data class DuanziListModel(
         data class Info(
             val commentNum: Long,
             var disLikeNum: Long,
-            val isAttention: Boolean,
+            var isAttention: Boolean,
             var isLike: Boolean,
             var isUnlike: Boolean,
             var likeNum: Long,

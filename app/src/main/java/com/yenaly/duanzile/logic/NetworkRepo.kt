@@ -98,6 +98,11 @@ object NetworkRepo {
         success = { it.data }
     )
 
+    fun subscribe(status: String, id: String) = makeRequest(
+        service = { DuanzileNetwork.userService.subscribe(status, id) },
+        success = { it.msg }
+    )
+
     fun getUserDuanzi(id: String) = Pager(
         config = PagingConfig(pageSize = PAGE_SIZE),
         pagingSourceFactory = {

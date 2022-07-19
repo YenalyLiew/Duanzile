@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yenaly.duanzile.R
 import com.yenaly.duanzile.TO_USER_ACTIVITY_ID
 import com.yenaly.duanzile.databinding.ItemDuanziBinding
@@ -179,6 +180,33 @@ class DuanziRvAdapter :
                             item.info.isUnlike = false
                             setIconResource(R.drawable.ic_baseline_thumb_down_off_alt_24)
                             text = text.toString().toLong().minus(1).toString()
+                        }
+                    )
+                }
+            }
+            viewHolder.binding.subscribe.clickTrigger(lifecycle) {
+                val position = viewHolder.bindingAdapterPosition
+                val item = getItem(position)
+                item?.let {
+                    viewHolder.binding.subscribe.subscribe(
+                        item.user.userID.toString(),
+                        !item.info.isAttention,
+                        subscribeAction = {
+                            viewHolder.binding.subscribe.isGone = true
+                            item.info.isAttention = true
+                        },
+                        cancelSubscribeAction = {
+                            viewHolder.binding.subscribe.isGone = false
+                            MaterialAlertDialogBuilder(context)
+                                .setTitle("确定取消关注吗")
+                                .setPositiveButton("确定") { _, _ ->
+                                    setIconResource(R.drawable.ic_baseline_add_24)
+                                    text = "关注"
+                                    item.info.isAttention = false
+                                    showShortToast("取关成功")
+                                }
+                                .setNegativeButton("取消", null)
+                                .show()
                         }
                     )
                 }

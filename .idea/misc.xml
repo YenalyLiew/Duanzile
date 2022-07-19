@@ -3,13 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/wrzg8/.gradle/caches/transforms-3/e2e631022a97e112882b2928a7385fc7/transformed/jiaozivideoplayer-7.7.0/res/layout/jz_layout_std.xml" value="0.10389055151774262" />
         <entry key="..\:/Users/wrzg8/.gradle/caches/transforms-3/f71c95ae4b539f33075f23742eb9a376/transformed/jiaozivideoplayer-7.7.0/res/layout/jz_layout_std.xml" value="0.1265625" />
         <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.2505" />
         <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2505" />
         <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/activity_home.xml" value="0.275" />
         <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/activity_login.xml" value="0.34714285714285714" />
         <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/activity_main.xml" value="0.1802536231884058" />
-        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/activity_user.xml" value="0.132" />
+        <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/activity_user.xml" value="0.3" />
         <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/fragment_home.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/fragment_home_child.xml" value="0.275" />
         <entry key="..\:/Users/wrzg8/AndroidStudioProjects/Duanzile/app/src/main/res/layout/fragment_message.xml" value="0.275" />

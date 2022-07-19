@@ -7,6 +7,5 @@ package com.yenaly.duanzile.logic.model
  */
 data class GeneralModel(
     override val code: Int,
-    override val msg: String,
-    val data: String
+    override val msg: String
 ) : IDuanzileModel

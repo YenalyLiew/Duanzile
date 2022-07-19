@@ -3,6 +3,7 @@ package com.yenaly.duanzile.ui.activity
 import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
+import cn.jzvd.Jzvd
 import com.google.android.material.button.MaterialButton
 import com.yenaly.duanzile.R
 import com.yenaly.duanzile.databinding.ActivityMainBinding
@@ -13,6 +14,7 @@ import com.yenaly.duanzile.ui.fragment.SlideVideoFragment
 import com.yenaly.duanzile.ui.viewmodel.MainViewModel
 import com.yenaly.yenaly_libs.base.YenalyActivity
 import com.yenaly.yenaly_libs.utils.SystemStatusUtil
+import com.yenaly.yenaly_libs.utils.isAppDarkMode
 import com.yenaly.yenaly_libs.utils.setSystemBarIconLightMode
 import com.yenaly.yenaly_libs.utils.showShortToast
 import com.yenaly.yenaly_libs.utils.view.BottomNavigationViewMediator
@@ -32,7 +34,7 @@ class MainActivity : YenalyActivity<ActivityMainBinding, MainViewModel>() {
                 R.id.nav_slide_video to SlideVideoFragment(),
                 R.id.nav_message to MessageFragment(),
                 R.id.nav_personal to PersonalFragment()
-            ), slide = false
+            )
         ).attach()
 
         bnvMediator.setOnFragmentChangedListener { currentFragment ->
@@ -58,11 +60,28 @@ class MainActivity : YenalyActivity<ActivityMainBinding, MainViewModel>() {
                         null
                     )
                 )
-                binding.toolbar.setTitleTextColor(Color.BLACK)
-                binding.toolbar.setSubtitleTextColor(Color.BLACK)
+                if (!isAppDarkMode) {
+                    binding.toolbar.setTitleTextColor(Color.BLACK)
+                    binding.toolbar.setSubtitleTextColor(Color.BLACK)
+                } else {
+                    binding.toolbar.setTitleTextColor(Color.WHITE)
+                    binding.toolbar.setSubtitleTextColor(Color.WHITE)
+                }
                 window.setSystemBarIconLightMode(true)
             }
         }
+    }
+
+    override fun onBackPressed() {
+        if (Jzvd.backPress()) {
+            return
+        }
+        super.onBackPressed()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Jzvd.releaseAllVideos()
     }
 
     fun MaterialButton.like(
@@ -104,6 +123,29 @@ class MainActivity : YenalyActivity<ActivityMainBinding, MainViewModel>() {
                     } else {
                         this@unlike.apply(cancelUnlikeAction)
                         showShortToast("取消点踩成功")
+                    }
+                } ?: result.exceptionOrNull()?.let { e ->
+                    e.printStackTrace()
+                    showShortToast(e.message)
+                }
+            }
+        }
+    }
+
+    fun MaterialButton.subscribe(
+        id: String,
+        status: Boolean,
+        subscribeAction: MaterialButton.() -> Unit,
+        cancelSubscribeAction: MaterialButton.() -> Unit
+    ) {
+        lifecycleScope.launchWhenStarted {
+            viewModel.subscribe(id, status).collect { result ->
+                result.getOrNull()?.let {
+                    if (status) {
+                        this@subscribe.apply(subscribeAction)
+                        showShortToast("关注成功")
+                    } else {
+                        this@subscribe.apply(cancelSubscribeAction)
                     }
                 } ?: result.exceptionOrNull()?.let { e ->
                     e.printStackTrace()
