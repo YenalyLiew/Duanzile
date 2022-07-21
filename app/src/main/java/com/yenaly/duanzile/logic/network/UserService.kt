@@ -44,10 +44,4 @@ interface UserService : DuanzileService {
         @Query("targetUserId") id: String,
         @Query("page") page: Int
     ): DuanziListModel
-
-    @POST("user/attention")
-    suspend fun subscribe(
-        @Query("status") status: String,
-        @Query("userId") userID: String
-    ): GeneralModel
 }

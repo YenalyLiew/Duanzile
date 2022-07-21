@@ -27,6 +27,8 @@ object DuanzileNetwork {
 
     val userService = create<UserService>(DUANZILE_BASE_URL)
 
+    val duanziService = create<DuanziService>(DUANZILE_BASE_URL)
+
     private inline fun <reified T : DuanzileService> create(baseUrl: String): T {
         return Retrofit.Builder().baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create()).client(okHttpClient()).build()

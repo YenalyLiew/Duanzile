@@ -3,8 +3,11 @@ package com.yenaly.duanzile.logic
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.yenaly.duanzile.logic.model.IDuanzileModel
+import com.yenaly.duanzile.logic.model.LikeUserModel
+import com.yenaly.duanzile.logic.network.CommentPagingSource
 import com.yenaly.duanzile.logic.network.DuanziPagingSource
 import com.yenaly.duanzile.logic.network.DuanzileNetwork
+import com.yenaly.duanzile.logic.network.LikeUserPagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -99,7 +102,7 @@ object NetworkRepo {
     )
 
     fun subscribe(status: String, id: String) = makeRequest(
-        service = { DuanzileNetwork.userService.subscribe(status, id) },
+        service = { DuanzileNetwork.generalService.subscribe(status, id) },
         success = { it.msg }
     )
 
@@ -138,6 +141,30 @@ object NetworkRepo {
             }
         }
     ).flow
+
+    fun getComment(id: String) = Pager(
+        config = PagingConfig(pageSize = PAGE_SIZE),
+        pagingSourceFactory = {
+            CommentPagingSource(id)
+        }
+    ).flow
+
+    fun getLikeUser(id: String) = Pager(
+        config = PagingConfig(pageSize = PAGE_SIZE),
+        pagingSourceFactory = {
+            LikeUserPagingSource(id)
+        }
+    ).flow
+
+    fun commentLike(id: String, status: Boolean) = makeRequest(
+        service = { DuanzileNetwork.duanziService.commentLike(id, status.toString()) },
+        success = { it.msg }
+    )
+
+    fun getDuanzi(id: String) = makeRequest(
+        service = { DuanzileNetwork.duanziService.getDuanzi(id) },
+        success = { it.data }
+    )
 
     private fun <T : IDuanzileModel, R> makeRequest(
         service: suspend () -> T,

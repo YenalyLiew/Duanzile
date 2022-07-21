@@ -9,7 +9,6 @@ import cn.jzvd.Jzvd
 import com.yenaly.duanzile.R
 import com.yenaly.duanzile.databinding.FragmentSlideVideoBinding
 import com.yenaly.duanzile.ui.activity.IToggleToolbar
-import com.yenaly.duanzile.ui.activity.MainActivity
 import com.yenaly.duanzile.ui.adapter.SlideVideoRvAdapter
 import com.yenaly.duanzile.ui.viewmodel.main.SlideVideoViewModel
 import com.yenaly.yenaly_libs.base.YenalyFragment
@@ -24,7 +23,7 @@ import kotlinx.coroutines.flow.collectLatest
 class SlideVideoFragment : YenalyFragment<FragmentSlideVideoBinding, SlideVideoViewModel>(),
     IToggleToolbar {
 
-    private val adapter by unsafeLazy { SlideVideoRvAdapter(activity as? MainActivity) }
+    private val adapter by unsafeLazy { SlideVideoRvAdapter() }
 
     override fun initData(savedInstanceState: Bundle?) {
         binding.vpSlide.orientation = ViewPager2.ORIENTATION_VERTICAL

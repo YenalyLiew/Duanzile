@@ -10,7 +10,7 @@
 
 ### BottomNavigationViewMediator
 
-使用了自己封装的`BottomNavigationViewMediator`，极大简化了底部导航栏与 ViewPager2 的结合过程，与`TabLayoutMediator`类似，只需要几行代码就能完成之间的结合，如**本项目**中的代码：
+使用了自己封装的`BottomNavigationViewMediator`，极大简化了底部导航栏与 ViewPager2 的结合过程，类似于轻量版的 Navigation Jetpack。与`TabLayoutMediator`类似，只需要几行代码就能完成之间的结合，如**本项目**中的代码：
 
 ```kotlin
 // MainActivity.kt
@@ -25,7 +25,7 @@ val bnvMediator = BottomNavigationViewMediator(
 ).attach()
 ```
 
-只需要传入 BottomNavigationView 与 ViewPager2 的实例和 menu id 和 Fragment 的 Pair 的 List，就能轻松结合。
+只需要传入 BottomNavigationView 与 ViewPager2 的实例和 menu id 与 Fragment 的 Pair 的 List，就能轻松结合。
 
 通过该种方式，还能获取到每次切换到的 Fragment，更加轻松的管理 Fragment，如**本项目**中的代码：
 

@@ -22,5 +22,9 @@ interface GeneralService : DuanzileService {
         @Query("status") status: String
     ): GeneralModel
 
-
+    @POST("user/attention")
+    suspend fun subscribe(
+        @Query("status") status: String,
+        @Query("userId") userID: String
+    ): GeneralModel
 }

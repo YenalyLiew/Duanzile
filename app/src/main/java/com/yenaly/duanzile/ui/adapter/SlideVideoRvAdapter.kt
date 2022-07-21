@@ -23,6 +23,7 @@ import com.yenaly.duanzile.logic.model.DuanziListModel
 import com.yenaly.duanzile.ui.activity.MainActivity
 import com.yenaly.duanzile.ui.activity.UserActivity
 import com.yenaly.duanzile.ui.view.SlideVideoJzvdStd
+import com.yenaly.yenaly_libs.utils.activity
 import com.yenaly.yenaly_libs.utils.showShortToast
 import com.yenaly.yenaly_libs.utils.startActivity
 import com.yenaly.yenaly_libs.utils.view.clickTrigger
@@ -33,7 +34,7 @@ import com.yenaly.yenaly_libs.utils.view.clickTrigger
  * @author Yenaly Liew
  * @time 2022/07/15 015 16:41
  */
-class SlideVideoRvAdapter(private val activity: MainActivity?) :
+class SlideVideoRvAdapter :
     PagingDataAdapter<DuanziListModel.Datum, SlideVideoRvAdapter.ViewHolder>(COMPARATOR) {
 
     companion object {
@@ -115,7 +116,7 @@ class SlideVideoRvAdapter(private val activity: MainActivity?) :
             // findViewById<View>(cn.jzvd.R.id.surface_container)
             posterImageView.scaleType = ImageView.ScaleType.FIT_CENTER
         }
-        activity?.apply {
+        (context.activity as? MainActivity)?.apply {
             viewHolder.binding.avatar.setOnClickListener {
                 val position = viewHolder.bindingAdapterPosition
                 val item = getItem(position)
