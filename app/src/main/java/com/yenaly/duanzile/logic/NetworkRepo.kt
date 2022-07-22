@@ -4,10 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.yenaly.duanzile.logic.model.IDuanzileModel
 import com.yenaly.duanzile.logic.model.LikeUserModel
-import com.yenaly.duanzile.logic.network.CommentPagingSource
-import com.yenaly.duanzile.logic.network.DuanziPagingSource
-import com.yenaly.duanzile.logic.network.DuanzileNetwork
-import com.yenaly.duanzile.logic.network.LikeUserPagingSource
+import com.yenaly.duanzile.logic.network.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -165,6 +162,24 @@ object NetworkRepo {
         service = { DuanzileNetwork.duanziService.getDuanzi(id) },
         success = { it.data }
     )
+
+    fun getUserSubscribeList(id: String) = Pager(
+        config = PagingConfig(pageSize = PAGE_SIZE),
+        pagingSourceFactory = {
+            FollowFansPagingSource { page ->
+                DuanzileNetwork.userService.getUserSubscribeList(id, page)
+            }
+        }
+    ).flow
+
+    fun getUserFanList(id: String) = Pager(
+        config = PagingConfig(pageSize = PAGE_SIZE),
+        pagingSourceFactory = {
+            FollowFansPagingSource { page ->
+                DuanzileNetwork.userService.getUserFanList(id, page)
+            }
+        }
+    ).flow
 
     private fun <T : IDuanzileModel, R> makeRequest(
         service: suspend () -> T,

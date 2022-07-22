@@ -1,9 +1,6 @@
 package com.yenaly.duanzile.logic.network
 
-import com.yenaly.duanzile.logic.model.DuanziListModel
-import com.yenaly.duanzile.logic.model.GeneralModel
-import com.yenaly.duanzile.logic.model.LoginUserModel
-import com.yenaly.duanzile.logic.model.UserModel
+import com.yenaly.duanzile.logic.model.*
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -44,4 +41,17 @@ interface UserService : DuanzileService {
         @Query("targetUserId") id: String,
         @Query("page") page: Int
     ): DuanziListModel
+
+
+    @POST("user/attention/list")
+    suspend fun getUserSubscribeList(
+        @Query("targetUserId") id: String,
+        @Query("page") page: Int
+    ): SubscribeUserModel
+
+    @POST("user/fans/list")
+    suspend fun getUserFanList(
+        @Query("targetUserId") id: String,
+        @Query("page") page: Int
+    ): SubscribeUserModel
 }

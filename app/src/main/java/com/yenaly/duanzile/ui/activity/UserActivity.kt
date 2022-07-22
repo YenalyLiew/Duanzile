@@ -15,25 +15,26 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
-import com.yenaly.duanzile.R
-import com.yenaly.duanzile.TO_TEXT_VIDEO_SPLIT_FRAGMENT
-import com.yenaly.duanzile.TO_USER_ACTIVITY_ID
-import com.yenaly.duanzile.TO_USER_ACTIVITY_IS_SELF
+import com.yenaly.duanzile.*
 import com.yenaly.duanzile.databinding.ActivityUserBinding
 import com.yenaly.duanzile.logic.model.UserModel
-import com.yenaly.duanzile.ui.fragment.user.LIKE
-import com.yenaly.duanzile.ui.fragment.user.TextVideoSplitFragment
-import com.yenaly.duanzile.ui.fragment.user.WORK
+import com.yenaly.duanzile.ui.fragment.user.*
 import com.yenaly.duanzile.ui.viewmodel.UserViewModel
 import com.yenaly.yenaly_libs.base.YenalyActivity
 import com.yenaly.yenaly_libs.utils.*
 import com.yenaly.yenaly_libs.utils.span.SpannedTextGenerator
 import com.yenaly.yenaly_libs.utils.view.AppBarLayoutStateChangeListener
 
+const val LIKED = "liked"
+const val FAV = "fav"
+const val TIEZI = "tiezi"
+const val COMMENT = "comment"
+
 class UserActivity : YenalyActivity<ActivityUserBinding, UserViewModel>() {
 
     private val id by intentExtra<Long>(TO_USER_ACTIVITY_ID)
     private val isSelf by intentExtra(TO_USER_ACTIVITY_IS_SELF, false)
+    private val what by intentExtra<String>(TO_USER_ACTIVITY_WHAT)
 
     private val tabText = arrayOf("作品", "喜欢", "评论", "收藏")
     private val likeMap = SparseBooleanArray().apply {
@@ -69,6 +70,18 @@ class UserActivity : YenalyActivity<ActivityUserBinding, UserViewModel>() {
             }
         })
 
+        binding.tvSubscribe.setOnClickListener {
+            startActivity<FollowFansActivity>(
+                TO_FOLLOW_FAN_ACTIVITY_ID to viewModel.userID,
+                FOLLOW_FANS_TAB to FOLLOW
+            )
+        }
+        binding.tvFans.setOnClickListener {
+            startActivity<FollowFansActivity>(
+                TO_FOLLOW_FAN_ACTIVITY_ID to viewModel.userID,
+                FOLLOW_FANS_TAB to FANS
+            )
+        }
 
         initNum()
 
@@ -195,6 +208,12 @@ class UserActivity : YenalyActivity<ActivityUserBinding, UserViewModel>() {
         TabLayoutMediator(binding.tlUser, binding.vpUser) { tab, position ->
             tab.text = tabText[position]
         }.attach()
+
+        when (what) {
+            LIKED -> binding.vpUser.setCurrentItem(1, false)
+            TIEZI -> binding.vpUser.setCurrentItem(0, false)
+        }
+
     }
 
     fun MaterialButton.like(

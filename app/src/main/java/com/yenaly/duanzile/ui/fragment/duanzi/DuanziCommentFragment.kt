@@ -30,7 +30,6 @@ class DuanziCommentFragment : YenalyFragment<LayoutRvWithRefreshBinding, DuanziV
                 DividerItemDecoration.VERTICAL
             )
         )
-        getComment()
         binding.srlHome.setOnRefreshListener {
             getComment()
         }

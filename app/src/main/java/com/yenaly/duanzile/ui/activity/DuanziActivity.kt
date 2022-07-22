@@ -142,6 +142,9 @@ class DuanziActivity : YenalyActivity<ActivityDuanziBinding, DuanziViewModel>() 
     }
 
     private fun initClick(item: DuanziListModel.Datum) {
+        binding.btnShare.setOnClickListener {
+            shareText(item.joke.content)
+        }
         binding.avatar.setOnClickListener {
             startActivity<UserActivity>(TO_USER_ACTIVITY_ID to item.user.userID)
         }
@@ -298,7 +301,7 @@ class DuanziActivity : YenalyActivity<ActivityDuanziBinding, DuanziViewModel>() 
         cancelLikeAction: MaterialButton.() -> Unit
     ) {
         lifecycleScope.launchWhenStarted {
-            viewModel.like(id, status).collect { result ->
+            viewModel.commentLike(id, status).collect { result ->
                 result.getOrNull()?.let {
                     if (status) {
                         this@commentLike.apply(likeAction)

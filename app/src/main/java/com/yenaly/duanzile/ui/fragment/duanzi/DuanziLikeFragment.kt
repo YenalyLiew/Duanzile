@@ -28,7 +28,6 @@ class DuanziLikeFragment : YenalyFragment<LayoutRvWithRefreshBinding, DuanziView
                 DividerItemDecoration.VERTICAL
             )
         )
-        getLikeUser()
         binding.srlHome.setOnRefreshListener {
             getLikeUser()
         }

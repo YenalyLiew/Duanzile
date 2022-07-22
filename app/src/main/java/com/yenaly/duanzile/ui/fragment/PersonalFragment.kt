@@ -13,9 +13,9 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.yenaly.duanzile.*
 import com.yenaly.duanzile.databinding.FragmentPersonalBinding
 import com.yenaly.duanzile.logic.model.LoginUserModel
-import com.yenaly.duanzile.ui.activity.IToggleToolbar
-import com.yenaly.duanzile.ui.activity.LoginActivity
-import com.yenaly.duanzile.ui.activity.UserActivity
+import com.yenaly.duanzile.ui.activity.*
+import com.yenaly.duanzile.ui.fragment.user.FANS
+import com.yenaly.duanzile.ui.fragment.user.FOLLOW
 import com.yenaly.duanzile.ui.viewmodel.main.PersonalViewModel
 import com.yenaly.yenaly_libs.base.YenalyFragment
 import com.yenaly.yenaly_libs.utils.*
@@ -65,7 +65,7 @@ class PersonalFragment : YenalyFragment<FragmentPersonalBinding, PersonalViewMod
             browse("https://github.com/YenalyLiew/Duanzile")
         }
         binding.settings.setOnClickListener {
-
+            showShortToast("没做")
         }
     }
 
@@ -118,27 +118,44 @@ class PersonalFragment : YenalyFragment<FragmentPersonalBinding, PersonalViewMod
             )
         }
 
-        binding.fans.setOnClickListener {
-
-        }
         binding.subscribe.setOnClickListener {
-
+            requireActivity().startActivity<FollowFansActivity>(
+                TO_FOLLOW_FAN_ACTIVITY_ID to data.user.userID,
+                FOLLOW_FANS_TAB to FOLLOW
+            )
+        }
+        binding.fans.setOnClickListener {
+            requireActivity().startActivity<FollowFansActivity>(
+                TO_FOLLOW_FAN_ACTIVITY_ID to data.user.userID,
+                FOLLOW_FANS_TAB to FANS
+            )
         }
         binding.ledou.setOnClickListener {
-
+            showShortToast("没做")
         }
-
         binding.tiezi.setOnClickListener {
-
+            startActivity<UserActivity>(
+                values = arrayOf<Pair<String, Any>>(
+                    TO_USER_ACTIVITY_ID to data.user.userID,
+                    TO_USER_ACTIVITY_IS_SELF to true,
+                    TO_USER_ACTIVITY_WHAT to TIEZI
+                )
+            )
         }
         binding.comment.setOnClickListener {
-
+            showShortToast("没做")
         }
         binding.liked.setOnClickListener {
-
+            startActivity<UserActivity>(
+                values = arrayOf<Pair<String, Any>>(
+                    TO_USER_ACTIVITY_ID to data.user.userID,
+                    TO_USER_ACTIVITY_IS_SELF to true,
+                    TO_USER_ACTIVITY_WHAT to LIKED
+                )
+            )
         }
         binding.fav.setOnClickListener {
-
+            showShortToast("没做")
         }
 
 

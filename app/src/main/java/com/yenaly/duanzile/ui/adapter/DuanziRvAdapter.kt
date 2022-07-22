@@ -20,6 +20,7 @@ import com.yenaly.duanzile.ui.activity.DuanziActivity
 import com.yenaly.duanzile.ui.activity.MainActivity
 import com.yenaly.duanzile.ui.activity.UserActivity
 import com.yenaly.yenaly_libs.utils.activity
+import com.yenaly.yenaly_libs.utils.shareText
 import com.yenaly.yenaly_libs.utils.showShortToast
 import com.yenaly.yenaly_libs.utils.startActivity
 import com.yenaly.yenaly_libs.utils.view.clickTrigger
@@ -129,6 +130,20 @@ class DuanziRvAdapter :
             val item = getItem(position)
             item?.let {
                 context.activity?.startActivity<DuanziActivity>(TO_DUANZI_ACTIVITY_ID to item.joke.jokesID)
+            }
+        }
+        viewHolder.binding.btnReply.setOnClickListener {
+            val position = viewHolder.bindingAdapterPosition
+            val item = getItem(position)
+            item?.let {
+                context.activity?.startActivity<DuanziActivity>(TO_DUANZI_ACTIVITY_ID to item.joke.jokesID)
+            }
+        }
+        viewHolder.binding.btnShare.setOnClickListener {
+            val position = viewHolder.bindingAdapterPosition
+            val item = getItem(position)
+            item?.let {
+                shareText(item.joke.content)
             }
         }
         (context as? MainActivity)?.apply {
