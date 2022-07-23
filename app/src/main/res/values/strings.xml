@@ -23,6 +23,5 @@
     <string name="verify_code_way">验证码方式</string>
     <string name="edit_info">编辑资料</string>
     <string name="dm">私信</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="like_unlike">赞 · 踩</string>
 </resources>

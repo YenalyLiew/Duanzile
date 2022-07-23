@@ -110,12 +110,6 @@ class SlideVideoRvAdapter :
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_slide_video, parent, false)
         val viewHolder = ViewHolder(view)
-        viewHolder.binding.video.apply {
-            findViewById<View>(cn.jzvd.R.id.layout_top).background = null
-            findViewById<View>(cn.jzvd.R.id.layout_bottom).isGone = true
-            // findViewById<View>(cn.jzvd.R.id.surface_container)
-            posterImageView.scaleType = ImageView.ScaleType.FIT_CENTER
-        }
         (context.activity as? MainActivity)?.apply {
             viewHolder.binding.avatar.setOnClickListener {
                 val position = viewHolder.bindingAdapterPosition

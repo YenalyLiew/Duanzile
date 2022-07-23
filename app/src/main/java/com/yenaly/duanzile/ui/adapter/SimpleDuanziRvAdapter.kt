@@ -20,6 +20,7 @@ import com.yenaly.duanzile.logic.model.DuanziListModel
 import com.yenaly.duanzile.ui.activity.DuanziActivity
 import com.yenaly.duanzile.ui.activity.UserActivity
 import com.yenaly.yenaly_libs.utils.activity
+import com.yenaly.yenaly_libs.utils.shareText
 import com.yenaly.yenaly_libs.utils.showShortToast
 import com.yenaly.yenaly_libs.utils.startActivity
 import com.yenaly.yenaly_libs.utils.view.clickTrigger
@@ -114,6 +115,20 @@ class SimpleDuanziRvAdapter :
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_duanzi_simplified, parent, false)
         val viewHolder = ViewHolder(view)
+        viewHolder.binding.btnReply.setOnClickListener {
+            val position = viewHolder.bindingAdapterPosition
+            val item = getItem(position)
+            item?.let {
+                context.activity?.startActivity<DuanziActivity>(TO_DUANZI_ACTIVITY_ID to item.joke.jokesID)
+            }
+        }
+        viewHolder.binding.btnShare.setOnClickListener {
+            val position = viewHolder.bindingAdapterPosition
+            val item = getItem(position)
+            item?.let {
+                shareText(item.joke.content)
+            }
+        }
         viewHolder.binding.video.apply {
             findViewById<View>(cn.jzvd.R.id.layout_top).background = null
             posterImageView.scaleType = ImageView.ScaleType.CENTER_CROP

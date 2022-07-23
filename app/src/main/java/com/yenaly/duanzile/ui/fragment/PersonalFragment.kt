@@ -120,13 +120,13 @@ class PersonalFragment : YenalyFragment<FragmentPersonalBinding, PersonalViewMod
 
         binding.subscribe.setOnClickListener {
             requireActivity().startActivity<FollowFansActivity>(
-                TO_FOLLOW_FAN_ACTIVITY_ID to data.user.userID,
+                TO_FOLLOW_FAN_ACTIVITY_ID to data.user.userID.toString(),
                 FOLLOW_FANS_TAB to FOLLOW
             )
         }
         binding.fans.setOnClickListener {
             requireActivity().startActivity<FollowFansActivity>(
-                TO_FOLLOW_FAN_ACTIVITY_ID to data.user.userID,
+                TO_FOLLOW_FAN_ACTIVITY_ID to data.user.userID.toString(),
                 FOLLOW_FANS_TAB to FANS
             )
         }

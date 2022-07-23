@@ -132,16 +132,9 @@ class UserActivity : YenalyActivity<ActivityUserBinding, UserViewModel>() {
                     data.attentionState = 2
                 },
                 cancelSubscribeAction = {
-                    MaterialAlertDialogBuilder(this)
-                        .setTitle("确定取消关注吗")
-                        .setPositiveButton("确定") { _, _ ->
-                            binding.subscribe.setIconResource(R.drawable.ic_baseline_add_24)
-                            binding.subscribe.text = "关注"
-                            data.attentionState = 0
-                            showShortToast("取关成功")
-                        }
-                        .setNegativeButton("取消", null)
-                        .show()
+                    binding.subscribe.setIconResource(R.drawable.ic_baseline_add_24)
+                    binding.subscribe.text = "关注"
+                    data.attentionState = 0
                 }
             )
         }
@@ -278,6 +271,7 @@ class UserActivity : YenalyActivity<ActivityUserBinding, UserViewModel>() {
                         showShortToast("关注成功")
                     } else {
                         cancelSubscribeAction.invoke()
+                        showShortToast("取关成功")
                     }
                 } ?: result.exceptionOrNull()?.let { e ->
                     e.printStackTrace()

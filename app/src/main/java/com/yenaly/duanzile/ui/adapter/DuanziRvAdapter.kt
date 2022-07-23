@@ -121,10 +121,6 @@ class DuanziRvAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_duanzi, parent, false)
         val viewHolder = ViewHolder(view)
-        viewHolder.binding.video.apply {
-            findViewById<View>(cn.jzvd.R.id.layout_top).background = null
-            posterImageView.scaleType = ImageView.ScaleType.CENTER_CROP
-        }
         viewHolder.itemView.setOnClickListener {
             val position = viewHolder.bindingAdapterPosition
             val item = getItem(position)

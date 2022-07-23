@@ -25,6 +25,7 @@ const val FOLLOW_FANS_TAB = "tab"
 class FollowFansActivity : YenalyActivity<ActivityFollowFansBinding, FollowFansViewModel>() {
 
     private val id by intentExtra<String>(TO_FOLLOW_FAN_ACTIVITY_ID)
+    private val type by intentExtra<String>(FOLLOW_FANS_TAB, FOLLOW)
 
     private val tabName = arrayOf("关注", "粉丝")
 
@@ -81,7 +82,7 @@ class FollowFansActivity : YenalyActivity<ActivityFollowFansBinding, FollowFansV
             tab.text = tabName[position]
         }.attach()
 
-        if (FOLLOW_FANS_TAB == FOLLOW) {
+        if (type == FOLLOW) {
             binding.vpFans.setCurrentItem(0, false)
         } else {
             binding.vpFans.setCurrentItem(1, false)
