@@ -181,6 +181,15 @@ object NetworkRepo {
         }
     ).flow
 
+    fun searchDuanzi(keyword: String) = Pager(
+        config = PagingConfig(pageSize = PAGE_SIZE),
+        pagingSourceFactory = {
+            DuanziPagingSource { page ->
+                DuanzileNetwork.duanziService.searchDuanzi(keyword, page)
+            }
+        }
+    ).flow
+
     private fun <T : IDuanzileModel, R> makeRequest(
         service: suspend () -> T,
         success: (T) -> R

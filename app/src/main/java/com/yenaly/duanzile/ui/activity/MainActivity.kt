@@ -2,6 +2,8 @@ package com.yenaly.duanzile.ui.activity
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.lifecycle.lifecycleScope
 import cn.jzvd.Jzvd
 import com.google.android.material.button.MaterialButton
@@ -13,10 +15,7 @@ import com.yenaly.duanzile.ui.fragment.PersonalFragment
 import com.yenaly.duanzile.ui.fragment.SlideVideoFragment
 import com.yenaly.duanzile.ui.viewmodel.MainViewModel
 import com.yenaly.yenaly_libs.base.YenalyActivity
-import com.yenaly.yenaly_libs.utils.SystemStatusUtil
-import com.yenaly.yenaly_libs.utils.isAppDarkMode
-import com.yenaly.yenaly_libs.utils.setSystemBarIconLightMode
-import com.yenaly.yenaly_libs.utils.showShortToast
+import com.yenaly.yenaly_libs.utils.*
 import com.yenaly.yenaly_libs.utils.view.BottomNavigationViewMediator
 import com.yenaly.yenaly_libs.utils.view.toggleBottomNavBehavior
 
@@ -28,6 +27,9 @@ class MainActivity : YenalyActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     override fun initData(savedInstanceState: Bundle?) {
+
+        setSupportActionBar(binding.toolbar)
+
         val bnvMediator = BottomNavigationViewMediator(
             binding.bnvMain, binding.vpMain, listOf(
                 R.id.nav_home to HomeFragment(),
@@ -82,6 +84,21 @@ class MainActivity : YenalyActivity<ActivityMainBinding, MainViewModel>() {
     override fun onPause() {
         super.onPause()
         Jzvd.releaseAllVideos()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main_toolbar, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.tb_search -> {
+                startActivity<SearchActivity>()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun MaterialButton.like(

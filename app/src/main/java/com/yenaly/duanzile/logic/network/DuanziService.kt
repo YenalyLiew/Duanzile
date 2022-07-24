@@ -32,4 +32,10 @@ interface DuanziService : DuanzileService {
     suspend fun getDuanzi(
         @Query("jokeId") id: String
     ): DuanziModel
+
+    @POST("home/jokes/search")
+    suspend fun searchDuanzi(
+        @Query("keyword") keyword: String,
+        @Query("page") page: Int
+    ): DuanziListModel
 }
