@@ -6,6 +6,30 @@
 
 段子乐第三方**考核用**APP，项目本身全部采用 Kotlin 编写，标准使用 MVVM 架构，Material 3 最新视觉标准，适配 Android 12 动态颜色模式，最低支持 Android 5（API 21）。
 
+## 截图
+
+- 主页一览
+
+  ![主页面](https://github.com/YenalyLiew/Duanzile/blob/master/DuanzileScreenshot/Screenshot_2022-07-24-22-02-18-850_com.yenaly.dua.jpg)
+
+  ![划一划](https://github.com/YenalyLiew/Duanzile/blob/master/DuanzileScreenshot/Screenshot_2022-07-24-22-02-24-071_com.yenaly.dua.jpg)
+
+  ![消息](https://github.com/YenalyLiew/Duanzile/blob/master/DuanzileScreenshot/Screenshot_2022-07-24-22-02-28-933_com.yenaly.dua.jpg)
+
+  ![我的](https://github.com/YenalyLiew/Duanzile/blob/master/DuanzileScreenshot/Screenshot_2022-07-24-22-02-32-649_com.yenaly.dua.jpg)
+
+- 搜索界面一览
+
+  ![搜索](https://github.com/YenalyLiew/Duanzile/blob/master/DuanzileScreenshot/Screenshot_2022-07-24-22-02-40-490_com.yenaly.dua.jpg)
+
+- 个人中心一览
+
+  ![个人中心](https://github.com/YenalyLiew/Duanzile/blob/master/DuanzileScreenshot/Screenshot_2022-07-24-22-02-49-610_com.yenaly.dua.jpg)
+
+  ![个人中心帖子](https://github.com/YenalyLiew/Duanzile/blob/master/DuanzileScreenshot/Screenshot_2022-07-24-22-03-22-202_com.yenaly.dua.jpg)
+
+  ![关注与粉丝](https://github.com/YenalyLiew/Duanzile/blob/master/DuanzileScreenshot/Screenshot_2022-07-24-22-03-33-190_com.yenaly.dua.jpg)
+
 ## 亮点
 
 ### BottomNavigationViewMediator
@@ -41,7 +65,7 @@ bnvMediator.setOnFragmentChangedListener { currentFragment ->
 }
 ```
 
-`BottomNavigationView.toggleBottomNavBehavior(View, Boolean)`解决了有时给底部导航栏的`layout_behavior`赋值 上下滑动时隐藏 的 behavior 时无效的问题，并且本人通过微调该 Behavior 的部分源码，修复了从一个隐藏底部导航栏的 Fragment 滑动切换到另一个不需要该 behavior 的 Fragment 时，底部导航栏不重新显示的问题。
+`BottomNavigationView.toggleBottomNavBehavior(View, Boolean)`解决了有时给底部导航栏的`layout_behavior`赋值 上下滑动时隐藏 的 behavior 时无效的问题，并且通过微调该 Behavior 的部分源码，修复了从一个隐藏底部导航栏的 Fragment 滑动切换到另一个不需要该 behavior 的 Fragment 时，底部导航栏不重新显示的问题。
 
 ### SingleFlowLaunch
 
@@ -74,9 +98,9 @@ class XXXFragment : Fragment() {
 }
 ```
 
-这样有个问题，只要每次 Fragment 重建，`doSomething()`就会再调用一次，这样 viewModelScope 毫无其用武之地。你说这不简单，放进 ViewModel 的`init`块里不就行了。我说我要加参数呢，你说这不简单，我给 ViewModel 传参数整个 Factory 不就得了。我只能说简单的页面这样还行，如果复杂起来，比如满足某个条件再触发`doSomething()`，而且是单次请求，而且带参数，会非常麻烦。
+这样有个问题，只要每次 Fragment 重建，`doSomething()`就会再调用一次，这样 ViewModelScope 毫无其用武之地。你说这不简单，放进 ViewModel 的`init`块里不就行了。我说我要加参数呢，你说这不简单，我给 ViewModel 传参数整个 Factory 不就得了。我只能说简单的页面这样还行，如果复杂起来，比如满足某个条件再触发`doSomething()`，而且是单次请求，而且带参数，会非常麻烦。
 
-所以图方便，我自己整了个`SingleFlowLaunch`，通过给每个请求加 tag，并储存在 Map 中，利用类似 LiveData 的 mVersion 的管理方式，控制该 launch 单次进行。并且在自己的 YenalyViewModel 中，增加了`CoroutineScope.singleLaunch(...)`拓展函数来简化使用。如**本项目**中的代码：
+所以图方便，我自己整了个`SingleFlowLaunch`，通过给每个请求加 tag，并储存在 Map 中，利用类似 LiveData 的版本管理方式，控制该 launch 单次进行。并且在自己的 YenalyViewModel 中，增加了`CoroutineScope.singleLaunch(...)`拓展函数来简化使用。如**本项目**中的代码：
 
 ```kotlin
 // UserViewModel.kt
@@ -102,7 +126,7 @@ fun getUserInfo(id: String, single: Boolean) {
 }
 ```
 
-这样灵活性更高，不用多传 Factory，不用`init`代码块，避免了让 viewModelScope 仅仅起到了 lifecycleScope 的作用。
+这样灵活性更高，不用多传 Factory，不用`init`代码块，避免了让 ViewModelScope 仅仅起到了 LifecycleScope 的作用。
 
 ### SpannedTextGenerator
 
@@ -163,11 +187,4 @@ var loginToken: String
 
 ### 部分功能没做
 
-部分地方做了浪费时间精力而且很少人会去使用，所以有的地方我只提供了按钮，但进不去。
-
-大部分地方还是都能进的。
-
-### 写了 README.md 不代表写完了
-
-我的评价：别急。
-
+大部分功能的地方还是都能进的。
