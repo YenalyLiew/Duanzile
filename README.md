@@ -6,6 +6,17 @@
 
 段子乐第三方**考核用**APP，项目本身全部采用 Kotlin 编写，标准使用 MVVM 架构，Material 3 最新视觉标准，适配 Android 12 动态颜色模式，最低支持 Android 5（API 21）。
 
+## 使用库
+
+1. `Flow`（切换线程，网络数据分发，ViewModel 缓存）
+2. `Retrofit`（网络请求）
+3. `Jetpack`（基本界面）
+4. `Glide`（展示图像）
+5. `Jzvd`（展示视频）
+6. `PhotoView`（展示图像）
+7. `Paging`（分页加载）
+8. `SwipeRefreshLayout`（滑动刷新布局）
+
 ## 截图
 
 - 主页一览

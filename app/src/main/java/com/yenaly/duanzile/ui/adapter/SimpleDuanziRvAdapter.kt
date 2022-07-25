@@ -11,13 +11,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.yenaly.duanzile.R
-import com.yenaly.duanzile.TO_DUANZI_ACTIVITY_ID
+import com.yenaly.duanzile.*
 import com.yenaly.duanzile.databinding.ItemDuanziSimplifiedBinding
 import com.yenaly.duanzile.ftpDecrypt
-import com.yenaly.duanzile.isLogin
 import com.yenaly.duanzile.logic.model.DuanziListModel
 import com.yenaly.duanzile.ui.activity.DuanziActivity
+import com.yenaly.duanzile.ui.activity.PicViewActivity
 import com.yenaly.duanzile.ui.activity.UserActivity
 import com.yenaly.yenaly_libs.utils.activity
 import com.yenaly.yenaly_libs.utils.shareText
@@ -191,6 +190,13 @@ class SimpleDuanziRvAdapter :
                             text = text.toString().toLong().minus(1).toString()
                         }
                     )
+                }
+            }
+            viewHolder.binding.image.setOnClickListener {
+                val position = viewHolder.bindingAdapterPosition
+                val item = getItem(position)
+                item?.let {
+                    startActivity<PicViewActivity>(TO_PIC_VIEW_URLS to listOf(item.joke.imageURL.ftpDecrypt()))
                 }
             }
         }

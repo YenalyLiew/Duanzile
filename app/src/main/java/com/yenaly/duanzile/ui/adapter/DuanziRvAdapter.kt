@@ -18,6 +18,7 @@ import com.yenaly.duanzile.ftpDecrypt
 import com.yenaly.duanzile.logic.model.DuanziListModel
 import com.yenaly.duanzile.ui.activity.DuanziActivity
 import com.yenaly.duanzile.ui.activity.MainActivity
+import com.yenaly.duanzile.ui.activity.PicViewActivity
 import com.yenaly.duanzile.ui.activity.UserActivity
 import com.yenaly.yenaly_libs.utils.activity
 import com.yenaly.yenaly_libs.utils.shareText
@@ -227,6 +228,13 @@ class DuanziRvAdapter :
                                 .show()
                         }
                     )
+                }
+            }
+            viewHolder.binding.image.setOnClickListener {
+                val position = viewHolder.bindingAdapterPosition
+                val item = getItem(position)
+                item?.let {
+                    startActivity<PicViewActivity>(TO_PIC_VIEW_URLS to listOf(item.joke.imageURL.ftpDecrypt()))
                 }
             }
         }

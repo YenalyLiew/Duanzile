@@ -64,6 +64,7 @@ dependencies {
     implementation("androidx.paging:paging-runtime:3.1.1")
     implementation("androidx.paging:paging-runtime-ktx:3.1.1")
     implementation("cn.jzvd:jiaozivideoplayer:7.7.0")
+    implementation("com.github.chrisbanes:PhotoView:2.3.0")
 
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
     testImplementation("junit:junit:4.13.2")

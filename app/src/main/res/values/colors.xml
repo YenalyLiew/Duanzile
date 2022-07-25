@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="background_color">#FFFBFE</color>
+
+    <color name="pic_view_action_bar_color">#66000000</color>
+    <color name="pic_view_title_mask_color">#66F5F5F5</color>
 </resources>
